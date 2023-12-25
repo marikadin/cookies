@@ -1,25 +1,3 @@
-import streamlit as st
-from google.auth.transport.requests import Request
-from google.oauth2 import id_token
-
-# Set your Google OAuth client ID
-CLIENT_ID = '250605044176-fqtehiqadj8deci2a2pmrs84k9c0kbv6.apps.googleusercontent.com'
-
-
-def authenticate_with_google(id_token_string):
-    try:
-        # Verify the ID token using the Google Auth library
-        id_info = id_token.verify_oauth2_token(id_token_string, Request(), CLIENT_ID)
-        return id_info
-    except Exception as e:
-        st.error(f"Authentication failed: {e}")
-        return None
-
-if 'clicked' not in st.session_state:
-    st.session_state.clicked = False
-
-def click_button():
-    st.session_state.clicked = True
 def main():
     st.title("Google Login with Streamlit")
 
@@ -45,17 +23,8 @@ def main():
                     # Save the user's email in Streamlit secrets
                     st.secrets["user_email"] = user_info['email']
 
-
-def exchange_code_for_id_token(code):
-    # Placeholder for the ID token (replace this with your actual implementation)
-    # In a real application, use a secure method to exchange the code for an ID token
-    # This might involve making a request to your server, which then communicates with Google's OAuth endpoint
-    # to exchange the code for an ID token
-    st.warning("In a real-world scenario, you should exchange the code for an ID token securely on the server side.")
-
-    # Placeholder for the ID token (replace this with your actual implementation)
-    return "your-id-token"
-
-
-if __name__ == "__main__":
-    main()
+                    # Display user information
+                    st.write("User Information:")
+                    st.write(f"Name: {user_info['name']}")
+                    st.write(f"Email: {user_info['email']}")
+                    st.write(f"User ID: {user_info['sub']}")
