@@ -49,7 +49,7 @@ def main():
 def exchange_code_for_id_token(code):
     # In a real-world scenario, you should exchange the code for an ID token securely on the server side
     # This might involve making a request to your server, which then communicates with Google's OAuth endpoint
-    st.warning(user_info)
+    st.warning(user_info[0])
 
 if __name__ == "__main__":
     main()
