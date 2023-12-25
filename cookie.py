@@ -57,8 +57,8 @@ def main():
                 if user_info:
                     st.success(f"Successfully logged in as {user_info['name']} ({user_info['email']})")
 
-                    # Save the user's email in Streamlit secrets
-                    st.secrets["user_email"] = user_info['email']
+                    # Save the user's information in Streamlit secrets
+                    st.secrets["user_info"] = user_info
 
                     # Display user information
                     st.write("User Information:")
