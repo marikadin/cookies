@@ -15,13 +15,17 @@ def authenticate_with_google(id_token_string):
         st.error(f"Authentication failed: {e}")
         return None
 
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
 
+def click_button():
+    st.session_state.clicked = True
 def main():
     st.title("Google Login with Streamlit")
 
-    # Add a button to initiate the login process
-    if st.button("Start Google Authentication"):
-        # Display a Google Sign-In button, allowing the user to sign in with their Google account
+    st.button('Analyze', on_click=click_button)
+    if st.session_state.clicked:
+
         login_url = f'https://accounts.google.com/o/oauth2/auth?client_id={CLIENT_ID}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=openid%20profile%20email&response_type=code'
         st.markdown(f"[Sign in with Google]({login_url})")
 
@@ -39,7 +43,7 @@ def main():
 
                     # Save the user's email in Streamlit secrets
                     st.secrets["user_email"] = user_info['email']
-                    st.write(user_info)
+                    st.write(user_infor)
 
 
 def exchange_code_for_id_token(code):
