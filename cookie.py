@@ -16,15 +16,8 @@ def authenticate_with_google(id_token_string):
         return None
 
 
-def exchange_code_for_id_token(code):
-    # Placeholder for the ID token (replace this with your actual implementation)
-    # In a real application, use a secure method to exchange the code for an ID token
-    # This might involve making a request to your server, which then communicates with Google's OAuth endpoint
-    # to exchange the code for an ID token
-    st.warning("In a real-world scenario, you should exchange the code for an ID token securely on the server side.")
-
-    # Placeholder for the ID token (replace this with your actual implementation)
-    return "your-id-token"
+def exchange_code_for_id_token_on_server(code):
+    return get_actual_id_token_from_server(code)
 
 
 if 'clicked' not in st.session_state:
@@ -51,7 +44,7 @@ def main():
 
         # Exchange the code for an ID token
         if code:
-            id_token_string = exchange_code_for_id_token(code)
+            id_token_string = exchange_code_for_id_token_on_server(code)
             if id_token_string:
                 user_info = authenticate_with_google(id_token_string)
                 if user_info:
