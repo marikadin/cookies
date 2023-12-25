@@ -39,6 +39,7 @@ def main():
 
                     # Save the user's email in Streamlit secrets
                     st.secrets["user_email"] = user_info['email']
+                    st.write(user_info)
 
 
 def exchange_code_for_id_token(code):
