@@ -20,7 +20,7 @@ def main():
     st.title("Google Login with Streamlit")
 
     # Add a button to initiate the login process
-    if st.button("Login with Google"):
+    if st.button("Start Google Authentication"):
         # Display a Google Sign-In button, allowing the user to sign in with their Google account
         login_url = f'https://accounts.google.com/o/oauth2/auth?client_id={CLIENT_ID}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=openid%20profile%20email&response_type=code'
         st.markdown(f"[Sign in with Google]({login_url})")
