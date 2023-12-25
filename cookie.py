@@ -20,6 +20,7 @@ if 'clicked' not in st.session_state:
 
 def click_button():
     st.session_state.clicked = True
+
 def main():
     st.title("Google Login with Streamlit")
 
@@ -43,8 +44,7 @@ def main():
 
                     # Save the user's email in Streamlit secrets
                     st.secrets["user_email"] = user_info['email']
-                    st.write(user_infor)
-
+                    st.write(user_info)
 
 def exchange_code_for_id_token(code):
     # Placeholder for the ID token (replace this with your actual implementation)
@@ -53,9 +53,13 @@ def exchange_code_for_id_token(code):
     # to exchange the code for an ID token
     st.warning("In a real-world scenario, you should exchange the code for an ID token securely on the server side.")
 
-    # Placeholder for the ID token (replace this with your actual implementation)
-    return "your-id-token"
-
+    # Correctly use google.auth.transport.requests.Request
+    try:
+        id_token_response = id_token.fetch_id_token(Request(), CLIENT_ID, code)
+        return id_token_response['id_token']
+    except Exception as e:
+        st.error(f"Error exchanging code for ID token: {e}")
+        return None
 
 if __name__ == "__main__":
     main()
