@@ -1,55 +1,61 @@
 import streamlit as st
-from google.auth.transport.requests import Request
 from google.oauth2 import id_token
+from google.auth.transport import requests
 
-CLIENT_ID = '250605044176-fqtehiqadj8deci2a2pmrs84k9c0kbv6.apps.googleusercontent.com'  # Replace with your Google Client ID
-
-
-def login_with_google():
-    st.title('Google Login with Streamlit')
-
-    st.sidebar.header('User Authentication')
-
-    if 'google_token' not in st.session_state:
-        st.session_state.google_token = st.text_input('Enter Google ID Token:')
-        st.session_state.user_info = None
-        st.session_state.login_error = None
-
-        if st.button('Login'):
-            id_info = verify_google_token(st.session_state.google_token)
-            if id_info:
-                st.session_state.user_info = id_info
-            else:
-                st.session_state.login_error = 'Invalid Google ID Token. Please try again.'
-
-    else:
-        st.session_state.user_info = None
-        st.session_state.login_error = None
-
-        if st.button('Logout'):
-            st.session_state.google_token = None
-
-    if st.session_state.user_info:
-        st.success(f'Login successful! Welcome, {st.session_state.user_info["name"]}!')
-
-        # Display user information
-        st.subheader('User Information:')
-        st.write(f'Name: {st.session_state.user_info["name"]}')
-        st.write(f'Email: {st.session_state.user_info["email"]}')
-        st.write(f'Picture URL: {st.session_state.user_info["picture"]}')
-
-    if st.session_state.login_error:
-        st.error(st.session_state.login_error)
+# Set your Google OAuth client ID
+CLIENT_ID = '250605044176-fqtehiqadj8deci2a2pmrs84k9c0kbv6.apps.googleusercontent.com'
 
 
-def verify_google_token(token):
+def authenticate_with_google(id_token_string):
     try:
-        id_info = id_token.verify_oauth2_token(token, Request(), CLIENT_ID)
+        # Verify the ID token using the Google Auth library
+        id_info = id_token.verify_oauth2_token(id_token_string, requests.Request(), CLIENT_ID)
         return id_info
-    except ValueError as e:
-        st.error(f'Error verifying Google ID Token: {e}')
+    except Exception as e:
+        st.error(f"Authentication failed: {e}")
         return None
 
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
 
-if __name__ == '__main__':
-    login_with_google()
+def click_button():
+    st.session_state.clicked = True
+
+def main():
+    st.title("Google Login with Streamlit")
+
+    st.button('Analyze', on_click=click_button)
+    if st.session_state.clicked:
+
+        login_url = f'https://accounts.google.com/o/oauth2/auth?client_id={CLIENT_ID}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=openid%20profile%20email&response_type=code'
+        st.markdown(f"[Sign in with Google]({login_url})")
+
+        # After the user signs in, they will be redirected to a page with a code
+        # Retrieve the code from the user input
+        code = st.text_input("Enter the code from the redirected URL:")
+
+        # Exchange the code for an ID token (perform this securely on the server side)
+        if code:
+            id_token_string = exchange_code_for_id_token(code)
+            if id_token_string:
+                user_info = authenticate_with_google(id_token_string)
+                if user_info:
+                    st.success(f"Successfully logged in as {user_info['name']} ({user_info['email']})")
+
+                    # Save the user's email in Streamlit secrets
+                    st.secrets["user_email"] = user_info['email']
+
+                    # Display user information
+                    st.write(user_info)
+
+def exchange_code_for_id_token(code):
+    # In a real-world scenario, you should exchange the code for an ID token securely on the server side
+    # This might involve making a request to your server, which then communicates with Google's OAuth endpoint
+    # st.warning("In a real-world scenario, you should exchange the code for an ID token securely on the server side.")
+
+    # Example: Display information for debugging
+    user_info = {"example": "debugging info"}
+    return "your-id-token"
+
+if __name__ == "__main__":
+    main()
