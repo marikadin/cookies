@@ -2,7 +2,7 @@ import streamlit as st
 from google.auth.transport.requests import Request
 from google.oauth2 import id_token
 
-CLIENT_ID = 'your_google_client_id'  # Replace with your Google Client ID
+CLIENT_ID = '250605044176-fqtehiqadj8deci2a2pmrs84k9c0kbv6.apps.googleusercontent.com'  # Replace with your Google Client ID
 
 
 def login_with_google():
@@ -31,6 +31,12 @@ def login_with_google():
 
     if st.session_state.user_info:
         st.success(f'Login successful! Welcome, {st.session_state.user_info["name"]}!')
+
+        # Display user information
+        st.subheader('User Information:')
+        st.write(f'Name: {st.session_state.user_info["name"]}')
+        st.write(f'Email: {st.session_state.user_info["email"]}')
+        st.write(f'Picture URL: {st.session_state.user_info["picture"]}')
 
     if st.session_state.login_error:
         st.error(st.session_state.login_error)
