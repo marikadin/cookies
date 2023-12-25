@@ -34,7 +34,7 @@ def main():
         # Retrieve the code from the user input
         code = st.text_input("Enter the code from the redirected URL:")
 
-        # Exchange the code for an ID token
+        # Exchange the code for an ID token (perform this securely on the server side)
         if code:
             id_token_string = exchange_code_for_id_token(code)
             if id_token_string:
@@ -47,19 +47,9 @@ def main():
                     st.write(user_info)
 
 def exchange_code_for_id_token(code):
-    # Placeholder for the ID token (replace this with your actual implementation)
-    # In a real application, use a secure method to exchange the code for an ID token
+    # In a real-world scenario, you should exchange the code for an ID token securely on the server side
     # This might involve making a request to your server, which then communicates with Google's OAuth endpoint
-    # to exchange the code for an ID token
-    st.warning("In a real-world scenario, you should exchange the code for an ID token securely on the server side.")
-
-    # Correctly use google.auth.transport.requests.Request
-    try:
-        id_token_response = id_token.fetch_id_token(Request(), CLIENT_ID, code)
-        return id_token_response['id_token']
-    except Exception as e:
-        st.error(f"Error exchanging code for ID token: {e}")
-        return None
+    st.warning(user_info)
 
 if __name__ == "__main__":
     main()
