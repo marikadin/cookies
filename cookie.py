@@ -3,7 +3,7 @@ from google.auth.transport.requests import Request
 from google.oauth2 import id_token
 
 # Set your Google OAuth client ID
-CLIENT_ID = 'your-client-id.apps.googleusercontent.com'
+CLIENT_ID = '250605044176-fqtehiqadj8deci2a2pmrs84k9c0kbv6.apps.googleusercontent.com'
 
 
 def authenticate_with_google(id_token_string):
