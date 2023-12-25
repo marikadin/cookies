@@ -1,3 +1,25 @@
+import streamlit as st
+from google.auth.transport.requests import Request
+from google.oauth2 import id_token
+
+# Set your Google OAuth client ID
+CLIENT_ID = '250605044176-fqtehiqadj8deci2a2pmrs84k9c0kbv6.apps.googleusercontent.com'
+
+
+def authenticate_with_google(id_token_string):
+    try:
+        # Verify the ID token using the Google Auth library
+        id_info = id_token.verify_oauth2_token(id_token_string, Request(), CLIENT_ID)
+        return id_info
+    except Exception as e:
+        st.error(f"Authentication failed: {e}")
+        return None
+
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
+
+def click_button():
+    st.session_state.clicked = True
 def main():
     st.title("Google Login with Streamlit")
 
@@ -28,3 +50,6 @@ def main():
                     st.write(f"Name: {user_info['name']}")
                     st.write(f"Email: {user_info['email']}")
                     st.write(f"User ID: {user_info['sub']}")
+
+if __name__ == "__main__":
+    main()
