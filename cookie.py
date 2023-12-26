@@ -37,11 +37,11 @@ def main():
     # Display the logged-in username
     if session_state.logged_in_user:
         st.subheader(f"Logged In User: {session_state.logged_in_user}")
-
-    # Add a Logout button outside the login function
-    if st.button("Logout") and session_state.logged_in_user:
+        if st.button("Logout") and session_state.logged_in_user:
         st.info("Logged out successfully.")
         session_state.logged_in_user = ""
+    # Add a Logout button outside the login function
+
 
 def sign_up(data):
     # Display current data
