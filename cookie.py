@@ -17,14 +17,13 @@ def save_data(data):
 
 # Streamlit app
 def main():
-  st.title("Streamlit JSON Editor")
-  page = st.sidebar.radio("Select Page", ["login", "sign up"])
+    st.title("Streamlit JSON Editor")
+    page = st.sidebar.radio("Select Page", ["login", "sign up"])
 
     if page == "login":
         login()
     elif page == "sign up":
         sign_up()
-
 
     # Load data from the JSON file
     data = load_data()
@@ -33,10 +32,9 @@ def main():
     st.subheader("Current Data:")
     st.write(data)
 
-def sign_up()
+def sign_up():
     user_name = st.text_input("Enter username")
     password = st.text_input("Enter password")
-
 
     # Check if the username already exists in the dictionary
     if user_name in data:
@@ -65,6 +63,7 @@ def sign_up()
         data.clear()
         st.warning("All data cleared.")
         save_data(data)
+
 def login():
     st.write("yes loglog")
 
