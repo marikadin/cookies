@@ -28,6 +28,10 @@ def main():
     if not hasattr(session_state, "logged_in_user"):
         session_state.logged_in_user = ""
 
+    # Handle session state unload event
+    if st.session_state._session_state_unload:
+        save_data(session_state, "session_state.json")
+
     page = st.sidebar.radio("Select Page", ["login", "sign up"])
 
     if page == "login":
