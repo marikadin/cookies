@@ -17,13 +17,12 @@ def save_data(data):
 
 # Streamlit app
 def main():
-    st.title("Streamlit JSON Editor")
-    selectbox = st.sidebar.selectbox(
-        "How would you like to be contacted?",
-        ("login", "sign up")
-    if selectbox == "login":
+  st.title("Streamlit JSON Editor")
+  page = st.sidebar.radio("Select Page", ["login", "sign up"])
+
+    if page == "login":
         login()
-    elif selectbox == "sign up":
+    elif page == "sign up":
         sign_up()
 
 
