@@ -1,6 +1,10 @@
 import streamlit as st
 import json
 
+# Declare global variables for login credentials
+login_user_name = ""
+login_password = ""
+
 # Function to read the JSON file
 def load_data():
     try:
@@ -65,6 +69,8 @@ def sign_up():
         save_data(data)
 
 def login():
+    global login_user_name, login_password
+
     # Load data from the JSON file
     data = load_data()
 
@@ -84,10 +90,6 @@ def login():
             st.info("Logged out successfully.")
     else:
         st.warning("Invalid username or password. Please try again.")
-
-    # Clear input fields after a login attempt
-    login_user_name = ""
-    login_password = ""
 
 if __name__ == "__main__":
     main()
