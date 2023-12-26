@@ -33,6 +33,8 @@ def main():
     # Check if the username already exists in the dictionary
     if user_name in data:
         st.warning("Username already exists. Please choose a different username.")
+        # Clear the password input field when the username is taken
+        password = ""
     else:
         # Add the new key-value pair to the data
         if st.button("Add to Dictionary"):
@@ -40,6 +42,9 @@ def main():
                 data[user_name] = password
                 st.success(f"Added: {user_name}: {password}")
                 save_data(data)
+                # Clear input fields after successfully adding data
+                user_name = ""
+                password = ""
             else:
                 st.warning("Please enter both username and password.")
 
