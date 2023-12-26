@@ -38,8 +38,8 @@ def main():
     if session_state.logged_in_user:
         st.subheader(f"Logged In User: {session_state.logged_in_user}")
         if st.button("Logout") and session_state.logged_in_user:
-        st.info("Logged out successfully.")
-        session_state.logged_in_user = ""
+            st.info("Logged out successfully.")
+            session_state.logged_in_user = ""
     # Add a Logout button outside the login function
 
 
