@@ -25,16 +25,16 @@ def main():
     elif page == "sign up":
         sign_up()
 
-def sign_up():    # Load data from the JSON file
+def sign_up():
+    # Load data from the JSON file
     data = load_data()
 
     # Display current data
     st.subheader("Current Data:")
     st.write(data)
 
-
     user_name = st.text_input("Enter username")
-    password = st.text_input("Enter password")
+    password = st.text_input("Enter password", type="password")
 
     # Check if the username already exists in the dictionary
     if user_name in data:
@@ -65,7 +65,21 @@ def sign_up():    # Load data from the JSON file
         save_data(data)
 
 def login():
-    st.write("yes loglog")
+    # Load data from the JSON file
+    data = load_data()
+
+    # Display current data
+    st.subheader("Current Data:")
+    st.write(data)
+
+    login_user_name = st.text_input("Enter username for login")
+    login_password = st.text_input("Enter password for login", type="password")
+
+    # Check if the entered username and password match
+    if login_user_name in data and data[login_user_name] == login_password:
+        st.success(f"Login successful for user: {login_user_name}")
+    else:
+        st.warning("Invalid username or password. Please try again.")
 
 if __name__ == "__main__":
     main()
