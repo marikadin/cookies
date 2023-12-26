@@ -1,9 +1,10 @@
 import streamlit as st
 import json
 
-# Declare global variables for login credentials
+# Declare global variables
 login_user_name = ""
 login_password = ""
+logged_in_user = ""
 
 # Function to read the JSON file
 def load_data():
@@ -28,6 +29,10 @@ def main():
         login()
     elif page == "sign up":
         sign_up()
+
+    # Display the logged-in username
+    if logged_in_user:
+        st.subheader(f"Logged In User: {logged_in_user}")
 
 def sign_up():
     # Load data from the JSON file
@@ -69,7 +74,7 @@ def sign_up():
         save_data(data)
 
 def login():
-    global login_user_name, login_password
+    global login_user_name, login_password, logged_in_user
 
     # Load data from the JSON file
     data = load_data()
@@ -84,10 +89,11 @@ def login():
     # Check if the entered username and password match
     if login_user_name in data and data[login_user_name] == login_password:
         st.success(f"Login successful for user: {login_user_name}")
-
+        logged_in_user = login_user_name
         # Add a Logout button
         if st.button("Logout"):
             st.info("Logged out successfully.")
+            logged_in_user = ""
     else:
         st.warning("Invalid username or password. Please try again.")
 
