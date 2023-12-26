@@ -43,8 +43,11 @@ def main():
     st.subheader("Updated Data:")
     st.write(data)
 
-    # Save data to the JSON file before exiting
-    save_data(data)
+    # Clear data button
+    if st.button("Clear Data"):
+        data.clear()
+        st.warning("All data cleared.")
+        save_data(data)
 
 if __name__ == "__main__":
     main()
