@@ -6,7 +6,7 @@ def load_data():
     try:
         with open("secrets.json", "r") as f:
             data = json.load(f)
-    except FileNotFoundError:
+    except (FileNotFoundError, json.JSONDecodeError):
         data = {}
     return data
 
