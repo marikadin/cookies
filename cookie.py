@@ -89,4 +89,14 @@ def login(data, logged_in_users, session_state):
     login_password = st.text_input("Enter password for login", type="password")
 
     # Check if the entered username and password match
-    if login_user_name in data and data[login
+    if login_user_name in data and data[login_user_name] == login_password:
+        st.success(f"Login successful for user: {login_user_name}")
+        session_state.logged_in_user = login_user_name
+        # Add the user to the logged-in users list
+        logged_in_users[login_user_name] = True
+        save_data(logged_in_users, "logged_in_users.json")
+    else:
+        st.warning("Invalid username or password. Please try again.")
+
+if __name__ == "__main__":
+    main()
