@@ -85,5 +85,9 @@ def login():
     else:
         st.warning("Invalid username or password. Please try again.")
 
+    # Clear input fields after a login attempt
+    login_user_name = ""
+    login_password = ""
+
 if __name__ == "__main__":
     main()
