@@ -1,11 +1,6 @@
 import streamlit as st
 import json
 
-class SessionState:
-    def __init__(self, **kwargs):
-        for key, value in kwargs.items():
-            setattr(self, key, value)
-
 # Function to read the JSON file
 def load_data():
     try:
@@ -24,24 +19,26 @@ def save_data(data):
 def main():
     st.title("Streamlit JSON Editor")
 
-    # Create or get the SessionState object
-    session_state = SessionState(logged_in_user="")
+    # Load data from the JSON file
+    data = load_data()
+
+    # Get the session state or create a new one
+    session_state = st.session_state
+    if not hasattr(session_state, "logged_in_user"):
+        session_state.logged_in_user = ""
 
     page = st.sidebar.radio("Select Page", ["login", "sign up"])
 
     if page == "login":
-        login(session_state)
+        login(data, session_state)
     elif page == "sign up":
-        sign_up()
+        sign_up(data)
 
     # Display the logged-in username
     if session_state.logged_in_user:
         st.subheader(f"Logged In User: {session_state.logged_in_user}")
 
-def sign_up():
-    # Load data from the JSON file
-    data = load_data()
-
+def sign_up(data):
     # Display current data
     st.subheader("Current Data:")
     st.write(data)
@@ -77,10 +74,7 @@ def sign_up():
         st.warning("All data cleared.")
         save_data(data)
 
-def login(session_state):
-    # Load data from the JSON file
-    data = load_data()
-
+def login(data, session_state):
     # Display current data
     st.subheader("Current Data:")
     st.write(data)
