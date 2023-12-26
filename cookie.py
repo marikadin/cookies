@@ -4,7 +4,7 @@ import json
 # Function to read the JSON file
 def load_data():
     try:
-        with open("data.json", "r") as f:
+        with open("secrets.json", "r") as f:
             data = json.load(f)
     except FileNotFoundError:
         data = {}
@@ -12,7 +12,7 @@ def load_data():
 
 # Function to save data to the JSON file
 def save_data(data):
-    with open("data.json", "w") as f:
+    with open("secrets.json", "w") as f:
         json.dump(data, f, indent=2)
 
 # Streamlit app
