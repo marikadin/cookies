@@ -27,15 +27,18 @@ def main():
     st.write(data)
 
     # Input new key-value pair
-    key = st.text_input("Enter Key:")
-    value = st.text_input("Enter Value:")
+    user_name = st.text_input("Enter username")
+    password = st.text_input("Enter password")
 
     # Add the new key-value pair to the data
     if st.button("Add to Dictionary"):
         if key and value:
-            data[key] = value
-            st.success(f"Added: {key}: {value}")
-            save_data(data)
+            if user_name not in data:
+                data[key] = value
+                st.success(f"Added: {user_name}: {password}")
+                save_data(data)
+            else:
+                st.write("this username is taken")
         else:
             st.warning("Please enter both key and value.")
 
