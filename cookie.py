@@ -4,7 +4,7 @@ import json
 # Function to read the JSON file
 def load_data():
     try:
-        with open("secrets.json", "r") as f:
+        with open("data.json", "r") as f:
             data = json.load(f)
     except FileNotFoundError:
         data = {}
@@ -42,6 +42,9 @@ def main():
     # Display updated data
     st.subheader("Updated Data:")
     st.write(data)
+
+    # Save data to the JSON file before exiting
+    save_data(data)
 
 if __name__ == "__main__":
     main()
