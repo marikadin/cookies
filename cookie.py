@@ -20,17 +20,24 @@ def main():
     st.title("Streamlit JSON Editor")
 
     # Load data from the JSON files
-    data = load_data("secrets.json")
-    logged_in_users = load_data("logged_in_users.json")
+    secrets_path = "secrets.json"
+    logged_in_users_path = "logged_in_users.json"
+    data = load_data(secrets_path)
+    logged_in_users = load_data(logged_in_users_path)
 
     # Get the session state or create a new one
     session_state = st.session_state
     if not hasattr(session_state, "logged_in_user"):
         session_state.logged_in_user = ""
 
-    # Handle session state unload event
-    if "session_state" in st.session_state:
-        save_data(st.session_state.session_state, "session_state.json")
+    # Check if there is a logged-in user in the session state
+    if session_state.logged_in_user:
+        st.subheader(f"Logged In User: {session_state.logged_in_user}")
+        if st.button("Logout") and session_state.logged_in_user:
+            st.info("Logged out successfully.")
+            logged_in_users.pop(session_state.logged_in_user, None)
+            save_data(logged_in_users, logged_in_users_path)
+            session_state.logged_in_user = ""
 
     page = st.sidebar.radio("Select Page", ["login", "sign up"])
 
@@ -38,15 +45,6 @@ def main():
         login(data, logged_in_users, session_state)
     elif page == "sign up":
         sign_up(data)
-
-    # Display the logged-in username
-    if session_state.logged_in_user:
-        st.subheader(f"Logged In User: {session_state.logged_in_user}")
-        if st.button("Logout") and session_state.logged_in_user:
-            st.info("Logged out successfully.")
-            logged_in_users.pop(session_state.logged_in_user, None)
-            save_data(logged_in_users, "logged_in_users.json")
-            session_state.logged_in_user = ""
 
 def sign_up(data):
     # Display current data
