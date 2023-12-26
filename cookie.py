@@ -25,14 +25,14 @@ def main():
     elif page == "sign up":
         sign_up()
 
-    # Load data from the JSON file
+def sign_up():    # Load data from the JSON file
     data = load_data()
 
     # Display current data
     st.subheader("Current Data:")
     st.write(data)
 
-def sign_up():
+
     user_name = st.text_input("Enter username")
     password = st.text_input("Enter password")
 
