@@ -38,6 +38,11 @@ def main():
     if session_state.logged_in_user:
         st.subheader(f"Logged In User: {session_state.logged_in_user}")
 
+    # Add a Logout button outside the login function
+    if st.button("Logout") and session_state.logged_in_user:
+        st.info("Logged out successfully.")
+        session_state.logged_in_user = ""
+
 def sign_up(data):
     # Display current data
     st.subheader("Current Data:")
@@ -86,10 +91,6 @@ def login(data, session_state):
     if login_user_name in data and data[login_user_name] == login_password:
         st.success(f"Login successful for user: {login_user_name}")
         session_state.logged_in_user = login_user_name
-        # Add a Logout button
-        if st.button("Logout"):
-            st.info("Logged out successfully.")
-            session_state.logged_in_user = ""
     else:
         st.warning("Invalid username or password. Please try again.")
 
